@@ -4,7 +4,7 @@ A real-time **Human vs AI** crypto trading competition powered by **Mistral AI**
 
 ## 🎯 Goal
 
-Build a hackathon-ready demo where a human player competes against a Mistral-powered AI agent in a simulated crypto trading environment. The game replays real historical market data (COVID crash, crypto mania, LUNA collapse, etc.) and lets both sides trade simultaneously. At the end, SAGE delivers a Mistral-generated post-game analysis — and a personalized roast.
+Build a production-ready demo where a human player competes against a Mistral-powered AI agent in a simulated crypto trading environment. The game replays real historical market data (COVID crash, crypto mania, LUNA collapse, etc.) and lets both sides trade simultaneously. At the end, SAGE delivers a Mistral-generated post-game analysis — and a personalized roast.
 
 ### Key Features
 
