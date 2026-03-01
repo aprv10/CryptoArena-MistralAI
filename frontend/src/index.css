@@ -1,0 +1,733 @@
+@import "tailwindcss";
+
+/* ── Neon Colosseum Design System ─────────────────────────────────────────── */
+
+:root {
+  --bg: #05050f;
+  --surface: rgba(12, 12, 30, 0.85);
+  --surface-solid: #0c0c1e;
+  --elevated: rgba(19, 19, 38, 0.9);
+  --elevated-solid: #131326;
+  --user-color: #00c2ff;
+  --user-glow: rgba(0, 194, 255, 0.25);
+  --user-glow-strong: rgba(0, 194, 255, 0.5);
+  --user-dim: rgba(0, 194, 255, 0.08);
+  --ai-color: #ff8c00;
+  --ai-glow: rgba(255, 140, 0, 0.25);
+  --ai-glow-strong: rgba(255, 140, 0, 0.5);
+  --ai-dim: rgba(255, 140, 0, 0.08);
+  --success: #00ff87;
+  --success-dim: rgba(0, 255, 135, 0.08);
+  --danger: #ff3355;
+  --danger-dim: rgba(255, 51, 85, 0.08);
+  --gold: #ffd700;
+  --gold-dim: rgba(255, 215, 0, 0.08);
+  --text: #eeeeff;
+  --text-secondary: #aaaacc;
+  --muted: #55557a;
+  --border: rgba(30, 30, 58, 0.8);
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+}
+
+/* ── Base Reset ───────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animated gradient background — two slow-moving color orbs */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 40%, rgba(0, 194, 255, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 80% 60%, rgba(255, 140, 0, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 800px 300px at 50% 90%, rgba(255, 215, 0, 0.02) 0%, transparent 70%),
+    linear-gradient(180deg, #05050f 0%, #080818 50%, #05050f 100%);
+  z-index: -2;
+  animation: bgPulse 12s ease-in-out infinite alternate;
+}
+
+/* Subtle hex grid overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='52' viewBox='0 0 60 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 15v22L30 52 0 37V15z' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.025'/%3E%3C/svg%3E");
+  background-size: 60px 52px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@keyframes bgPulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ── Typography ───────────────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+.display-text {
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* ── Cards (glassmorphism) ────────────────────────────────────────────────── */
+
+.card {
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(85, 85, 122, 0.5);
+}
+
+/* Inner glow layer */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+/* User-themed card */
+.card-user {
+  border-color: rgba(0, 194, 255, 0.25);
+  box-shadow: 0 0 30px rgba(0, 194, 255, 0.05), inset 0 1px 0 rgba(0, 194, 255, 0.08);
+}
+
+.card-user:hover {
+  border-color: rgba(0, 194, 255, 0.4);
+  box-shadow: 0 0 40px rgba(0, 194, 255, 0.1), inset 0 1px 0 rgba(0, 194, 255, 0.12);
+}
+
+.card-user::before {
+  background: radial-gradient(ellipse at 50% -20%, var(--user-glow) 0%, transparent 60%);
+  opacity: 1;
+}
+
+/* AI-themed card */
+.card-ai {
+  border-color: rgba(255, 140, 0, 0.25);
+  box-shadow: 0 0 30px rgba(255, 140, 0, 0.05), inset 0 1px 0 rgba(255, 140, 0, 0.08);
+}
+
+.card-ai:hover {
+  border-color: rgba(255, 140, 0, 0.4);
+  box-shadow: 0 0 40px rgba(255, 140, 0, 0.1), inset 0 1px 0 rgba(255, 140, 0, 0.12);
+}
+
+.card-ai::before {
+  background: radial-gradient(ellipse at 50% -20%, var(--ai-glow) 0%, transparent 60%);
+  opacity: 1;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+
+.btn {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--user-color), #0088cc);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--user-glow);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 30px var(--user-glow-strong);
+  transform: translateY(-1px);
+}
+
+.btn-buy {
+  background: linear-gradient(135deg, #00ff87, #00cc6a);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(0, 255, 135, 0.25);
+}
+
+.btn-buy:hover {
+  box-shadow: 0 6px 30px rgba(0, 255, 135, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-sell {
+  background: linear-gradient(135deg, #ff3355, #cc0033);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(255, 51, 85, 0.25);
+}
+
+.btn-sell:hover {
+  box-shadow: 0 6px 30px rgba(255, 51, 85, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: rgba(19, 19, 38, 0.5);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  border-color: var(--muted);
+  background: var(--elevated);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 200% 100%;
+  color: #000;
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 1rem 3rem;
+  box-shadow: 0 4px 30px rgba(255, 215, 0, 0.3);
+  animation: goldShimmer 3s ease-in-out infinite;
+}
+
+.btn-gold:hover {
+  box-shadow: 0 8px 50px rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+@keyframes goldShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ── Animations ───────────────────────────────────────────────────────────── */
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--user-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 20px var(--user-glow-strong);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-3px);
+  }
+
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes dotPulse {
+
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Thinking dots */
+.thinking-dots span {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 3px;
+  background: var(--ai-color);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--ai-glow);
+  animation: dotPulse 1.4s ease-in-out infinite;
+}
+
+.thinking-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.thinking-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* ── Ticker Tape ──────────────────────────────────────────────────────────── */
+
+.ticker-tape-container {
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(12, 12, 30, 0.9);
+  border-bottom: 1px solid var(--border);
+}
+
+.ticker-tape-inner {
+  display: inline-flex;
+  animation: tickerScroll 40s linear infinite;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  border-right: 1px solid rgba(30, 30, 58, 0.5);
+  transition: background 0.2s;
+}
+
+.ticker-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ── Form Elements ────────────────────────────────────────────────────────── */
+
+.input {
+  background: var(--elevated-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font-mono);
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--user-color);
+  box-shadow: 0 0 0 2px var(--user-glow), 0 0 20px rgba(0, 194, 255, 0.08);
+}
+
+.select {
+  background: var(--elevated-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font-mono);
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2355557a'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.2s ease;
+}
+
+.select:focus {
+  border-color: var(--user-color);
+  box-shadow: 0 0 0 2px var(--user-glow);
+}
+
+.select option {
+  background: #131326;
+  color: var(--text);
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ── Utility ──────────────────────────────────────────────────────────────── */
+
+.text-success {
+  color: var(--success);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+.text-user {
+  color: var(--user-color);
+}
+
+.text-ai {
+  color: var(--ai-color);
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.bg-surface {
+  background: var(--surface);
+}
+
+.bg-elevated {
+  background: var(--elevated);
+}
+
+/* ── Trade flash animation ────────────────────────────────────────────────── */
+
+@keyframes tradeFlash {
+  0% {
+    box-shadow: inset 0 0 30px rgba(0, 255, 135, 0.2);
+    border-color: var(--success);
+  }
+
+  100% {
+    box-shadow: none;
+  }
+}
+
+@keyframes tradeFlashSell {
+  0% {
+    box-shadow: inset 0 0 30px rgba(255, 51, 85, 0.2);
+    border-color: var(--danger);
+  }
+
+  100% {
+    box-shadow: none;
+  }
+}
+
+.trade-flash-buy {
+  animation: tradeFlash 0.8s ease-out;
+}
+
+.trade-flash-sell {
+  animation: tradeFlashSell 0.8s ease-out;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .btn-gold {
+    font-size: 1.2rem;
+    padding: 0.75rem 2rem;
+  }
+}
+
+/* ── Range Slider Styling ─────────────────────────────────────────────────── */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--elevated-solid);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--gold);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.4);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 24px rgba(255, 215, 0, 0.6);
+  transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+/* ── Win probability bar ──────────────────────────────────────────────────── */
+
+.prob-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--elevated-solid);
+  overflow: hidden;
+  position: relative;
+}
+
+.prob-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 10px rgba(0, 194, 255, 0.3);
+}
+
+/* ── End Screen overlay — override bg pseudo-elements ─────────────────────── */
+
+.end-screen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.end-screen-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: -1;
+}
+
+/* ── Sparkle trail cursor for lobby ───────────────────────────────────────── */
+
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0) translateY(-20px);
+  }
+}
+
+/* ── Number counter animation ─────────────────────────────────────────────── */
+
+@keyframes counterSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.counter-animate {
+  animation: counterSlide 0.3s ease-out;
+}
+
+/* ── Disabled button state ────────────────────────────────────────────────── */
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
