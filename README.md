@@ -1,5 +1,7 @@
 # ⚔ CryptoArena — Human vs AI Crypto Battle
 
+![demo pic](assets/Screenshot 2026-03-27 153024.png)
+
 A real-time **Human vs AI** crypto trading competition powered by **Mistral AI**. Players go head-to-head against SAGE 🧠, an autonomous AI trader, replaying historical market scenarios across 1,440 one-minute candles. Trade BTC, ETH, BNB, DOGE, and SOL — and see who comes out on top.
 
 ## 🎯 Goal
